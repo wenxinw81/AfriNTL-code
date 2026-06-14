@@ -1,6 +1,6 @@
-# BrightNTL Code
+# AfriNTL Code
 
-BrightNTL is an Africa-optimized two-stage nighttime light reconstruction framework for producing annual 500 m nighttime light data. The implementation follows the manuscript methods: Stage I calibrates and desaturates DMSP-OLS time series with a Dynamic Spatio-Temporal Feature Extraction Network (DSTFE), and Stage II reconstructs high-resolution 500 m nighttime lights with population-adaptive sparse convolution and an enhancement-denoising dual-branch network.
+AfriNTL is an Africa-optimized two-stage nighttime light reconstruction framework for producing annual 500 m nighttime light data. The implementation follows the manuscript methods: Stage I calibrates and desaturates DMSP-OLS time series with a Dynamic Spatio-Temporal Feature Extraction Network (DSTFE), and Stage II reconstructs high-resolution 500 m nighttime lights with population-adaptive sparse convolution and an enhancement-denoising dual-branch network.
 
 ## Method Overview
 
@@ -11,7 +11,7 @@ Stage II integrates Stage I output, LandScan population density, DEM-derived ter
 ## Repository Layout
 
 ```text
-brightntl/
+AfriNTL/
   models/       PyTorch Stage I and Stage II model definitions
   data/         GeoTIFF IO, temporal windows, and dataset classes
   training/     L1-loss training and evaluation loops
@@ -33,7 +33,7 @@ pip install -e ".[dev]"
 
 ## Configuration
 
-Edit `configs/brightntl_default.yaml` to match the local project layout. The default configuration follows the manuscript data groups:
+Edit `configs/AfriNTL_default.yaml` to match the local project layout. The default configuration follows the manuscript data groups:
 
 - harmonized DMSP-OLS annual GeoTIFFs
 - RNTL calibration reference GeoTIFFs
@@ -62,7 +62,7 @@ Train Stage I DSTFE:
 
 ```bash
 python scripts/train_stage1.py \
-  --config configs/brightntl_default.yaml \
+  --config configs/AfriNTL_default.yaml \
   --output outputs/checkpoints/stage1_dstfe.pt
 ```
 
@@ -70,7 +70,7 @@ Train Stage II reconstruction:
 
 ```bash
 python scripts/train_stage2.py \
-  --config configs/brightntl_default.yaml \
+  --config configs/AfriNTL_default.yaml \
   --output outputs/checkpoints/stage2_reconstruction.pt
 ```
 
@@ -80,20 +80,20 @@ Predict a Stage I annual intermediate raster:
 
 ```bash
 python scripts/predict_stage1.py \
-  --config configs/brightntl_default.yaml \
+  --config configs/AfriNTL_default.yaml \
   --checkpoint outputs/checkpoints/stage1_dstfe.pt \
   --year 2010 \
   --output outputs/stage1_1km/2010.tif
 ```
 
-Predict an annual 500 m BrightNTL raster:
+Predict an annual 500 m AfriNTL raster:
 
 ```bash
 python scripts/predict_year.py \
-  --config configs/brightntl_default.yaml \
+  --config configs/AfriNTL_default.yaml \
   --checkpoint outputs/checkpoints/stage2_reconstruction.pt \
   --year 2010 \
-  --output outputs/brightntl_500m/2010.tif
+  --output outputs/AfriNTL_500m/2010.tif
 ```
 
 ## Validation
@@ -102,11 +102,11 @@ Compute basic radiometric accuracy against a reference raster:
 
 ```bash
 python scripts/validate_product.py \
-  --prediction outputs/brightntl_500m/2012.tif \
+  --prediction outputs/AfriNTL_500m/2012.tif \
   --reference data/viirs_vnl_v2/2012.tif
 ```
 
-The `brightntl.metrics` module also includes PSNR, SSIM, temporal mutation, overall accuracy, Kappa, IoU, relative area accuracy, and expansion-rate error functions used by the manuscript validation workflow.
+The `AfriNTL.metrics` module also includes PSNR, SSIM, temporal mutation, overall accuracy, Kappa, IoU, relative area accuracy, and expansion-rate error functions used by the manuscript validation workflow.
 
 ## Synthetic Check
 

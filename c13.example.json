@@ -1,0 +1,11 @@
+{
+  "annual": {"2000": "data/raw_predictions/2000.tif", "2001": "data/raw_predictions/2001.tif"},
+  "study_mask": "data/independent_africa_mask.tif",
+  "lower": 0.1,
+  "default_lower": 0.1,
+  "upper_quantile": 0.9995,
+  "quantile_population": "positive_after_default",
+  "quantile_domain": "native",
+  "upper_baseline": "lower_only",
+  "output": "outputs/C13"
+}

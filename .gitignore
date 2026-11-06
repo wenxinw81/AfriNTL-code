@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+data/
+outputs/
+*.tif
+*.tiff
+*.h5
+*.pt
+*.pth
+*.npz
+.env
+.DS_Store
